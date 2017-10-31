@@ -15,11 +15,11 @@ public class Lesson02Gray {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        // 创建图像
-        Mat src = Imgcodecs.imread(rootPath + "lena.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);//彩色图像
+        // 创建图像,灰度图像
+        Mat src = Imgcodecs.imread(rootPath + "lena.png", Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE);
         Rect rect = new Rect(10, 10, 200, 200);
-        // tl:top left  br:bottom right
-        Imgproc.rectangle(src,rect.tl(),rect.br(),new Scalar(255),2,8,0);;
+        // tl:top left  br:bottom right 两个点确定一个长方形,Scalar代指颜色
+        Imgproc.rectangle(src, rect.tl(), rect.br(), new Scalar(255), 2, 8, 0);
         // 生成灰度图像
         Imgcodecs.imwrite(rootPath + "lena_gray.jpg", src);
         src.release();

@@ -1,8 +1,6 @@
 package com.huawei.l00379880;
 
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 
 import java.util.ArrayList;
@@ -14,7 +12,7 @@ import java.util.List;
  * @author l0037980
  * @datte 2017-11-01 19:09
  */
-public class Lesson06SplitMerge {
+public class Lesson06SplitMix {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -28,19 +26,17 @@ public class Lesson06SplitMerge {
         Core.split(src, matList);
         // 遍历list是引用传值
         for (int i = 0; i < matList.size(); i++) {
-            // 把第一个通道置空
-            if (i == 0 || i == 1) {
-                matList.get(i).setTo(new Scalar(0, 0, 0));
-            }
             ImageUI singleChannelUI = new ImageUI();
             singleChannelUI.imshow("channel--" + i, matList.get(i));
         }
 
-        // 合并通道
-        Mat dst = new Mat(src.size(), src.type());
-        // matList在前面已经改掉了,注意遍历list是引用穿值
-        Core.merge(matList, dst);
-        ImageUI mergeUI = new ImageUI();
-        mergeUI.imshow("融合后的图", dst);
+        // 混合通道
+        List<Mat> matListOther = new ArrayList<>();
+        // 读一个灰度图
+        matListOther.add(new Mat(src.size(), CvType.CV_8UC1));
+        // 把src的第二个通道即r通道放过去
+        Core.mixChannels(matList, matListOther, new MatOfInt(2, 0));
+        ImageUI mixUI = new ImageUI();
+        mixUI.imshow("混合后的图,红色混进去的", matListOther.get(0));
     }
 }

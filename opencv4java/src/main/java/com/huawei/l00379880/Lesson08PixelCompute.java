@@ -1,8 +1,6 @@
 package com.huawei.l00379880;
 
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 
 public class Lesson08PixelCompute {
@@ -53,6 +51,11 @@ public class Lesson08PixelCompute {
         Core.addWeighted(src, 1.2, matBlack, 0.0, -10, dstWeight, src.type());
         ImageUI weightUI = new ImageUI();
         weightUI.imshow("权重混合", dstWeight);
+
+        // 创建一个纯黑色的mat,即全是0
+        Mat matMask = Mat.zeros(src.size(), CvType.CV_8UC1);
+        // 截取一个矩形区域
+        Rect rect = new Rect(100, 200, 100, 100);
     }
 
 }

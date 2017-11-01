@@ -12,7 +12,7 @@ import java.util.List;
  * @author l0037980
  * @datte 2017-11-01 19:09
  */
-public class Lesson06SplitMix {
+public class Lesson07SplitMix {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);

@@ -36,10 +36,9 @@ public class Lesson04MatForeachOnceGray {
         System.out.println("***************************图像的类型转换****************************");
         // 转换为灰度图像,下面的函数是非常常用的
         Mat dst = new Mat();
-        // 把三色图像转换为灰度图
+        // 把三色图像转换为灰度图,还有很多其他的转换方式,自己都尝试下
         Imgproc.cvtColor(src, dst, Imgproc.COLOR_BGR2GRAY);
         channels = dst.channels();
-
         System.out.println("***************************循环遍历图像******************************");
         // 读取并修改每个像素点的像素值
         // 用于获取全部的图像数据

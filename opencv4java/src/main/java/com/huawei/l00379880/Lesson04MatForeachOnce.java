@@ -6,9 +6,9 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 
 /**
- * 遍历图像,获取像素点与图像的额大小和类型等相关信息
+ * 一次性遍历图像,获取像素点与图像的额大小和类型等相关信息
  */
-public class Lesson04MatForeach {
+public class Lesson04MatForeachOnce {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -42,21 +42,22 @@ public class Lesson04MatForeach {
         // 读取并修改每个像素点的像素值
         // 每个像素点是3通道的
         byte[] pixel = new byte[channels];
+        // 用于获取全部的图像数据
+        byte[] data = new byte[channels * width * height];
+        //把全部元素放到data中
+        src.get(0, 0, data);
         int r, g, b;
         //灰度图像只有一个通道
         int gray;
         for (int row = 0; row < height; row++) {
             for (int col = 0; col < width; col++) {
-                // 把从row行col列开始的往后channels个元素赋值给pixel,因为pixel数组的大小为channels,
-                // 如果把数组声明更大的话实际会放更多元素的
+                // 赋值给pixel
                 src.get(row, col, pixel);
                 if (channels == 3) {
-                    // 彩色图像,&0xff是为了转换为正的十进制
-                    // byte 值 & 0xff 可以把负的byte值转成相对应的正的byte值，因为在16禁止里面byte没有负数
-                    // 比如:byte -128 到 127,  做完  & 0xfff 操作以后就变成 0 - 255
-                    b = pixel[0] & 0xff;
-                    g = pixel[1] & 0xff;
-                    r = pixel[2] & 0xff;
+                    // 彩色图像,&0xff是为了转换为十进制
+                    b = data[(row * width + col) * channels];
+                    g = data[(row * width + col) * channels + 1];
+                    r = data[(row * width + col) * channels + 2];
 
                     //图像取反
                     b = 255 - b;
@@ -64,21 +65,22 @@ public class Lesson04MatForeach {
                     r = 255 - r;
 
                     //再转换为二进制后放回去
-                    pixel[0] = (byte) b;
-                    pixel[1] = (byte) g;
-                    pixel[2] = (byte) r;
+                    data[(row * width + col) * channels] = (byte) b;
+                    data[(row * width + col) * channels + 1] = (byte) g;
+                    data[(row * width + col) * channels + 2] = (byte) r;
                 } else {
-                    // 灰度图像
-                    gray = pixel[0] & 0xff;
+                    // 灰度图像,channels为1,乘不乘都可以
+                    gray = data[(row * width + col) * channels] & 0xff;
                     gray = 255 - gray;
                     // 转换为二进制
-                    pixel[0] = (byte) gray;
+                    data[(row * width + col) * channels] = (byte) gray;
                 }
-                // 把点处理完了就放回去
-                src.put(row, col, pixel);
             }
         }
-        Imgcodecs.imwrite(rootPath + "lesson04_changePixels.jpg", src);
+        // 把点处理完了就全放回去
+        src.put(0, 0, data);
+        Imgcodecs.imwrite(rootPath + "lesson04_changePixels_Once.jpg", src);
+        System.out.println("图像转换完成");
         src.release();
         dst.release();
     }

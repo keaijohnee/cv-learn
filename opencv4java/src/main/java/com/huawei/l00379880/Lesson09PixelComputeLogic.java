@@ -29,17 +29,17 @@ public class Lesson09PixelComputeLogic {
         ImageUI andUI = new ImageUI();
         andUI.imshow("与操作", dstAnd);
 
-        // 或操作,结果到dst中
+        // 或操作,结果到dst中,有一个为1就为1,两个相同就为0
         Mat dstOr = new Mat();
         Core.bitwise_or(src, matMask, dstOr);
         ImageUI orUI = new ImageUI();
-        orUI.imshow("与操作", dstOr);
+        orUI.imshow("或操作", dstOr);
 
         // 非操作
         Mat dstNot = new Mat();
         Core.bitwise_not(src, dstNot);
         ImageUI notUI = new ImageUI();
-        notUI.imshow("与操作", dstNot);
+        notUI.imshow("非操作", dstNot);
     }
 
 }

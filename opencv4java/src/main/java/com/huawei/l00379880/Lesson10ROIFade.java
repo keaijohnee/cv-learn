@@ -8,9 +8,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 import org.opencv.core.Scalar;
 import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 
-public class Lesson10ROI {
+public class Lesson10ROIFade {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -39,15 +38,12 @@ public class Lesson10ROI {
         Rect rectToReplace = new Rect(105, 300, 200, 200);
         // 用于替换原图中的rect区域的自己的图像
         Mat imageToCling = Imgcodecs.imread(rootPath + "roi.png");
-        // 拷贝到原图中
-        imageToCling.copyTo(src.submat(rectToReplace));
-        ImageUI mergeUI = new ImageUI();
-        mergeUI.imshow("利用上面ROI和原图是引用关系的原理,实现两张图片的融合", src);
 
+        // 不知道为啥,把上一个文件中的拷贝到原图中的代码先加上就起不到融合的效果了,42到45行
         // 截选出一块来用于融合操作
         Mat roiFade = src.submat(rectToReplace);
         // 对读入的小图片做模糊化
-        Core.addWeighted(imageToCling,0.5,roiFade,0.5,0,imageToCling);
+        Core.addWeighted(imageToCling,0.3,roiFade,0.7,0,imageToCling);
         // 拷贝到原图中
         imageToCling.copyTo(src.submat(rectToReplace));
         ImageUI fadeUI = new ImageUI();

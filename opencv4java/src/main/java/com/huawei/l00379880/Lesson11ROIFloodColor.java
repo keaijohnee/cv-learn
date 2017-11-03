@@ -16,6 +16,7 @@ public class Lesson11ROIFloodColor {
         ui.imshow("lena", src);
 
 
+        // reatc无关紧要,哪怕是空的也无所谓
         Rect rect = new Rect(1, 1, src.cols(), src.rows());
         // 遮罩必须比原图像大两个像素.只能对二值图像进行填充
         Mat mask = Mat.zeros(src.rows() + 2, src.cols() + 2, CvType.CV_8UC1);

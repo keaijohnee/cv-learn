@@ -36,7 +36,7 @@ public class ImageUI extends JComponent {
         ui.setTitle(title);
         ui.getContentPane().setLayout(new BorderLayout());
         ui.getContentPane().add(this, BorderLayout.CENTER);
-        ui.setSize(image.getWidth() + 2, image.getHeight() + 2);
+        ui.setSize(image.getWidth() + 16, image.getHeight() + 38);
         ui.setVisible(true);
         this.repaint();
     }

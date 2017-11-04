@@ -27,7 +27,7 @@ public class Lesson12Blur {
         // 最后一个参数为卷积核,最好是奇数,数字越大模糊效果越强
         Imgproc.blur(src, avgMat, new Size(5, 5));
         ImageUI avgUI = new ImageUI();
-        avgUI.imshow("均指模糊后的图像", avgMat);
+        avgUI.imshow("均值模糊后的图像", avgMat);
 
         // 2.中值模糊,效果是局部模糊,中值模糊去局部噪声的效果非常好
         Mat meanMat = new Mat();
@@ -35,19 +35,46 @@ public class Lesson12Blur {
         ImageUI meanUI = new ImageUI();
         meanUI.imshow("中值模糊后的图像", meanMat);
 
-        // 3.自定义模糊,用于对上面模糊的图片进行锐化处理,可用于还原模糊的图片.构造卷积矩阵非常关键
-        Mat selfMat = new Mat();
+
+        // 3. Filter2D函数非常重要,下面是其典型的三种应用
+        // 3.1.自定义锐化,用于对上面模糊的图片进行锐化处理,可用于还原模糊的图片.构造卷积矩阵非常关键
+        Mat selfSharpMat = new Mat();
         // 下面两行构造卷积矩阵
-        Mat kMat = new Mat(3, 3, CvType.CV_32FC1);
+        Mat kSharpMat = new Mat(3, 3, CvType.CV_32FC1);
         // 初始化一个3*3的矩阵
-        float[] data = new float[]{0, -1, 0, -1, 5, -1, 0, -1, 0};
+        float[] dataSharp = new float[]{0, -1, 0, -1, 5, -1, 0, -1, 0};
         // 用数组给上面的3*3的矩阵初始化
-        kMat.put(0, 0, data);
+        kSharpMat.put(0, 0, dataSharp);
         // 最重要:自定义过滤器.
         // 对第二部得到的图像进行第二次的锐化过滤
-        Imgproc.filter2D(meanMat, selfMat, CvType.CV_8U, kMat);
-        ImageUI selfUI = new ImageUI();
-        selfUI.imshow("自定义过滤器处理后的图像", selfMat);
+        Imgproc.filter2D(meanMat, selfSharpMat, CvType.CV_8U, kSharpMat);
+        ImageUI selfSharpUI = new ImageUI();
+        selfSharpUI.imshow("自定义锐化过滤器处理后的图像", selfSharpMat);
 
+        // 3.2 自定义均值模糊
+        Mat selfAvgMat = new Mat();
+        // 下面两行构造卷积矩阵
+        Mat kAvgMat = new Mat(3, 3, CvType.CV_32FC1);
+        // 初始化一个3*3的矩阵
+        float[] dataAvg = new float[]{1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f, 1.0f / 9.0f};
+        // 用数组给上面的3*3的矩阵初始化
+        kAvgMat.put(0, 0, dataAvg);
+        // 最重要:自定义均值模糊.
+        Imgproc.filter2D(src, selfAvgMat, CvType.CV_8U, kAvgMat);
+        ImageUI selfAvgUI = new ImageUI();
+        selfAvgUI.imshow("自定义均值模糊处理后的图像", selfAvgMat);
+
+        // 3.3 自定义边缘过过滤
+        Mat selfEdgeMat = new Mat();
+        // 下面两行构造卷积矩阵
+        Mat kEdgeMat = new Mat(2, 2, CvType.CV_32FC1);
+        // 初始化一个3*3的矩阵
+        float[] dataEdge = new float[]{0, 1, -1, 0};
+        // 用数组给上面的3*3的矩阵初始化
+        kEdgeMat.put(0, 0, dataEdge);
+        // 最重要:自定义边缘检测器.
+        Imgproc.filter2D(src, selfEdgeMat, CvType.CV_8U, kEdgeMat);
+        ImageUI selfEdgeUI = new ImageUI();
+        selfEdgeUI.imshow("自定义边缘检测处理后的图像", selfEdgeMat);
     }
 }

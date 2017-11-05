@@ -6,7 +6,7 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 /**
- * 自适应的阈值确定法,在OTSU和Triangle方法都不好用的时候用这部分方法
+ * 自适应的阈值确定法,在OTSU和Triangle方法都不好用的时候用这部分方法(比如光线差异大的情况下)
  * 1.均值法(局部均值)
  * 2.高斯均值法
  * **2.1  b*b大小的像素块

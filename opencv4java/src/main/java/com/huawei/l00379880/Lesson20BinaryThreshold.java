@@ -6,10 +6,12 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 /**
- * 图像二值化,一般是借助于直方图进行二值化,有如下几种方法
+ * 图像二值化,一般是借助于直方图进行二值化,有如下几种方法,12属于局部阈值法,3属于全局阈值法(下一讲讲)
  * 1.OTSU
  * 2.Triangle
  * 3.自适应阈值
+ * * 3.1 平均值法
+ * * 3.2 高斯法
  * 4.根据直方图自己观察确定
  *
  * @author 梁山广
@@ -20,7 +22,7 @@ public class Lesson20BinaryThreshold {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat src = Imgcodecs.imread(rootPath + "dilireba.png");
+        Mat src = Imgcodecs.imread(rootPath + "test1.png");
         ImageUI ui = new ImageUI();
         ui.imshow("原始图片", src);
 

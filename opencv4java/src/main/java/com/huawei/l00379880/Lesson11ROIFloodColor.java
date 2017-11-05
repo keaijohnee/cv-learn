@@ -1,6 +1,10 @@
 package com.huawei.l00379880;
 /**
  * 泛洪填充,第一个函数,可以填充彩色图像
+ *
+ * @author 梁山广
+ * @eamil liangshanguang2@gmail.com
+ * @date 2017-11-04
  */
 
 import org.opencv.core.*;

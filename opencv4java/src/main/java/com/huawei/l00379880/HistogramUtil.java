@@ -18,8 +18,8 @@ public class HistogramUtil {
         ImageUI ui = new ImageUI();
         ui.imshow("原始图片", src);
 //        showGrayHistogram(src);
-        showColorHisogramSeperate(src);
-//        showColorHisogramInOne(src);
+//        showColorHisogramSeperate(src);
+        showColorHisogramInOne(src);
     }
 
     /**

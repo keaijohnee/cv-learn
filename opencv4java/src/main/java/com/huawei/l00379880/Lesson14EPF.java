@@ -8,7 +8,8 @@ import org.opencv.imgproc.Imgproc;
 /**
  * 边缘保留滤波,包括高斯双边和均值迁移.,属于非线性滤波.非常好的美化效果
  *
- * @author l00379880
+ * @author 梁山广
+ * @eamil liangshanguang2@gmail.com
  * @date 2017-11-04
  */
 public class Lesson14EPF {

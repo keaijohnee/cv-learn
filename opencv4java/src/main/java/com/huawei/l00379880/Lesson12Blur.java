@@ -10,7 +10,8 @@ import org.opencv.imgproc.Imgproc;
 /**
  * 各种图片的模糊,均值模糊,中值模糊,自定义模糊
  *
- * @author l00379880
+ * @author 梁山广
+ * @eamil liangshanguang2@gmail.com
  * @date 2017-11-04 14:51
  */
 public class Lesson12Blur {

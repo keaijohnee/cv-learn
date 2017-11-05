@@ -11,6 +11,10 @@ import java.util.Random;
 
 /**
  * 高斯模糊
+ *
+ * @author 梁山广
+ * @eamil liangshanguang2@gmail.com
+ * @date 2017-11-04
  */
 public class Lesson13GaussBlur {
     public static void main(String[] args) {

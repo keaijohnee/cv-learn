@@ -8,7 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***********************************************************
- * @Description : 多尺度模板匹配
+ * @Description : 多尺度模板匹配,当在原图上匹配不到时,很可能时因为
+ *                图片大小和模板不匹配,通过高斯金字塔进行放缩,很可
+ *                能在原图缩小一定比例的时候就能匹配上
  * @author      : 梁山广
  * @date        : 2017/11/7 10:42
  * @email       : liangshanguang2@gmail.com
@@ -17,9 +19,10 @@ public class Lesson25MScaleTemplateMatch {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        Mat src = Imgcodecs.imread(rootPath + "test1.png");
-        Mat template = Imgcodecs.imread(rootPath + "tpl.png");
-
+        Mat src = Imgcodecs.imread(rootPath + "traffic.jpg");
+        Mat template = Imgcodecs.imread(rootPath + "flag.png");
+        ImageUI ui = new ImageUI();
+        ui.imshow("原始图片", src);
         // 三层高斯,获取各个层次的图
         List<Mat> scaleList = buildGaussianPyramid(src, 3);
         List<Mat> templateList = buildGaussianPyramid(template, 3);

@@ -33,17 +33,24 @@ public class Lesson25MScaleTemplateMatch {
                 Point minLoc = minMaxLocResult.minLoc;
 
                 Point matchLoc = null;
+                double matchValue = 0.0;
                 // Imgproc.TM_XX下五中方法的比较
                 if (method == Imgproc.TM_SQDIFF || method == Imgproc.TM_SQDIFF_NORMED) {
                     matchLoc = minLoc;
+                    matchValue = minMaxLocResult.minVal;
                 } else {
                     matchLoc = maxLoc;
+                    matchValue = minMaxLocResult.maxVal;
                 }
-                // 为了不影响原图,所以先clone一份给自己
-                Mat copy = src.clone();
-                Imgproc.rectangle(copy, matchLoc, new Point(matchLoc.x + template.cols(), matchLoc.y + template.rows()), new Scalar(0, 0, 255), 2, 8, 0);
-                ImageUI matchUI = new ImageUI();
-                matchUI.imshow("把匹配的结果在原图上显示出来", copy);
+                // 匹配度大于0.75才显示出来
+                if (matchValue > 0.75) {
+                    // 为了不影响原图,所以先clone一份给自己
+                    Mat copy = src.clone();
+                    Imgproc.rectangle(copy, matchLoc, new Point(matchLoc.x + template.cols(), matchLoc.y + template.rows()), new Scalar(0, 0, 255), 2, 8, 0);
+                    ImageUI matchUI = new ImageUI();
+                    matchUI.imshow("把匹配的结果在原图上显示出来", copy);
+                    break;
+                }
             }
         }
 

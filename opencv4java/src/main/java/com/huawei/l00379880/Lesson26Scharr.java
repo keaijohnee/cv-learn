@@ -7,12 +7,14 @@ import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 /***********************************************************
- * @Description : 图像的一阶导数,用于检测图像边缘,Sobel算子
+ * @Description : 图像的一阶导数,用于检测图像边缘,Scharr算子,和
+ *                Sobel算子只有名字不同.别的都完全一样.Scharr的
+ *                感觉更明显、细致一些.Sobel线条粗一些
  * @author      : 梁山广
  * @date        : 2017/11/8 11:45
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson26Sobel {
+public class Lesson26Scharr {
     public static void main(String[] args) {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
@@ -24,7 +26,7 @@ public class Lesson26Sobel {
         // Sobel 算子的x轴,并把图显示出来
         Mat xgrad = new Mat();
         // 求x方向的梯度
-        Imgproc.Sobel(src, xgrad, CvType.CV_32F, 1, 0);
+        Imgproc.Scharr(src, xgrad, CvType.CV_32F, 1, 0);
         // 梯度有负数,所以用绝对值函数转换为正数
         Core.convertScaleAbs(xgrad, xgrad);
         Mat ximage = new Mat();
@@ -32,11 +34,11 @@ public class Lesson26Sobel {
         Core.normalize(xgrad, xgrad, 0, 255, Core.NORM_MINMAX);
         xgrad.convertTo(ximage, CvType.CV_8UC3);
         ImageUI xgradUI = new ImageUI();
-        xgradUI.imshow("X 方向的Sobel算子", xgrad);
+        xgradUI.imshow("X 方向的Scharr算子", xgrad);
 
         // Sobel 算子的y轴,并把图显示出来
         Mat ygrad = new Mat();
-        Imgproc.Sobel(src, ygrad, CvType.CV_32F, 0, 1);
+        Imgproc.Scharr(src, ygrad, CvType.CV_32F, 0, 1);
         // 梯度有负数,所以用绝对值函数转换为正数
         Core.convertScaleAbs(ygrad, ygrad);
         Mat yimage = new Mat();
@@ -44,7 +46,7 @@ public class Lesson26Sobel {
         Core.normalize(ygrad, ygrad, 0, 255, Core.NORM_MINMAX);
         xgrad.convertTo(yimage, CvType.CV_8UC3);
         ImageUI ygradUI = new ImageUI();
-        ygradUI.imshow("Y 方向的Sobel算子", ygrad);
+        ygradUI.imshow("Y 方向的Scharr算子", ygrad);
 
         // 把x和y轴的结合在一起
         Mat grad = new Mat();

@@ -18,6 +18,7 @@ public class Lesson35TopBlackHatAndGradient {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         // 图像是彩色还是单色都是可以的
         Mat src = Imgcodecs.imread(rootPath + "circles.jpg");
+        // Mat src = Imgcodecs.imread(rootPath + "dilireba.png"); // 试试彩色图像的形态学梯度,效果非常好
         ImageUI ui = new ImageUI();
         ui.imshow("原始图像", src);
         // blackhatDemo(src);

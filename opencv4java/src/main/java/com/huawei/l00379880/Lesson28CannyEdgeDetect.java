@@ -25,9 +25,9 @@ public class Lesson28CannyEdgeDetect {
         // 读入含有噪声的lena图像 lesson12noiselena
         Mat src = Imgcodecs.imread(rootPath + "dilireba.png");
         ImageUI ui = new ImageUI();
+        ui.imshow("原始图像", src);
 
         // (一)第一种边缘检测方法
-        ui.imshow("原始图像", src);
         // 1.高斯模糊---GaussianBlur
         Mat dst = new Mat();
         Imgproc.GaussianBlur(src, dst, new Size(3, 3), 0);
@@ -55,10 +55,16 @@ public class Lesson28CannyEdgeDetect {
         ImageUI result2UI = new ImageUI();
         result2UI.imshow("利用Sobel算子的结果进行Canny边缘检测", result2Mat);
 
-        // 把边缘检测结果转换为彩色图
+        // (三)直接对彩色图像进行Canny检测
+        Mat result3Mat = new Mat();
+        Imgproc.Canny(src, result3Mat, 50, 100);
+        ImageUI result3UI = new ImageUI();
+        result3UI.imshow("直接对彩色图像进行边缘检测",result3Mat);
         Mat edges = new Mat();
+        // 把边缘检测结果转换为彩色图
         src.copyTo(edges, output);
         ImageUI colorUI = new ImageUI();
         colorUI.imshow("边缘检测结果的彩色图像", edges);
+
     }
 }

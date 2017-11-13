@@ -1,11 +1,11 @@
 package com.huawei.l00379880;
 
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /***********************************************************
  * @Description : 分水岭算法的实现,基本流程如下:
@@ -88,6 +88,9 @@ public class Lesson37WaterSheds {
         erodeUI.imshow("腐蚀后的图像", erode_8u);
 
         // 6.生成marker
-
+        List<MatOfPoint> contours = new ArrayList<>();
+        Mat hierarchy = new Mat();
+        Imgproc.findContours(erode_8u, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
+        Mat markers = Mat.zeros(src.size(), CvType.CV_32SC1);
     }
 }

@@ -18,8 +18,7 @@ public class Lesson36DistanceTransform {
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
         // 图像是彩色还是单色都是可以的
-        Mat src = Imgcodecs.imread(rootPath + "circles.jpg");
-        // Mat src = Imgcodecs.imread(rootPath + "dilireba.png"); // 试试彩色图像的形态学梯度,效果非常好
+        Mat src = Imgcodecs.imread(rootPath + "morph.png");
         ImageUI ui = new ImageUI();
         ui.imshow("原始图像", src);
         Mat gray = new Mat();

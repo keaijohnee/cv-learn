@@ -3,6 +3,7 @@ package com.huawei.l00379880;
 import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
@@ -14,7 +15,7 @@ import org.opencv.imgproc.Imgproc;
  * @date        : 2017/11/13 20:55
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson36WaterSheds {
+public class Lesson37WaterSheds {
     public static void main(String[] args) {
 
         // 1.输入图像并进行适当的预处理
@@ -73,5 +74,20 @@ public class Lesson36WaterSheds {
         dist.convertTo(dist_8u, CvType.CV_8U);
         ImageUI distUI = new ImageUI();
         distUI.imshow("距离变换后的图像", dist_8u);
+
+        // 5.寻找种子
+        // 进行二值化和腐蚀,去除尖锐边角和噪声(0.4~1)*255范围进行二值化
+        Imgproc.threshold(dist, dist, 102, 255, Imgproc.THRESH_BINARY);
+        Mat erode = new Mat();
+        // 获得腐蚀算子
+        Mat kernel = Imgproc.getStructuringElement(Imgproc.MORPH_RECT, new Size(13, 13));
+        Imgproc.erode(dist, erode, kernel);
+        Mat erode_8u = new Mat();
+        erode.convertTo(erode_8u, CvType.CV_8U);
+        ImageUI erodeUI = new ImageUI();
+        erodeUI.imshow("腐蚀后的图像", erode_8u);
+
+        // 6.生成marker
+
     }
 }

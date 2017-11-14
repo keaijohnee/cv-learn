@@ -6,6 +6,7 @@ import org.opencv.imgproc.Imgproc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /***********************************************************
  * @Description : 分水岭算法的实现,基本流程如下:
@@ -21,8 +22,9 @@ public class Lesson37WaterSheds {
         // 1.输入图像并进行适当的预处理
         String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-        // 图像是彩色还是单色都是可以的
+        // 图像是彩色还是单色都是可以的.circles.jpg也可以试试
         Mat src = Imgcodecs.imread(rootPath + "cards.png");
+        //Mat src = Imgcodecs.imread(rootPath + "circles.jpg");
         ImageUI ui = new ImageUI();
         ui.imshow("原始图像", src);
         // 白色背景换成黑色背景.因为白色会干扰比较大所以为了方便处理图片一般都把图像背景转为黑色
@@ -92,5 +94,41 @@ public class Lesson37WaterSheds {
         Mat hierarchy = new Mat();
         Imgproc.findContours(erode_8u, contours, hierarchy, Imgproc.RETR_EXTERNAL, Imgproc.CHAIN_APPROX_SIMPLE, new Point(0, 0));
         Mat markers = Mat.zeros(src.size(), CvType.CV_32SC1);
+        // 随机颜色数组
+        Scalar[] colors = new Scalar[contours.size()];
+        Random random = new Random();
+        for (int i = 0; i < contours.size(); i++) {
+            // 把Marker绘制上
+            Imgproc.drawContours(markers, contours, i, new Scalar(i + 1), -1);
+            colors[i] = new Scalar(random.nextInt(255), random.nextInt(255), random.nextInt(255));
+        }
+        Imgproc.circle(markers, new Point(5, 5), 3, new Scalar(255), -1);
+
+
+        // 7.分水岭变换
+        Imgproc.watershed(src, markers);
+        Mat mark = Mat.zeros(markers.size(), CvType.CV_8UC1);
+        markers.convertTo(mark, CvType.CV_8U);
+        Core.bitwise_not(mark, mark);
+        ImageUI watershedUI = new ImageUI();
+        watershedUI.imshow("分水岭变换后的结果", mark);
+
+        // 给各个边框填色
+        Mat dst = new Mat(src.size(), CvType.CV_8UC3);
+        int[] idxv = new int[1];
+        for (int row = 0; row < markers.rows(); row++) {
+            for (int col = 0; col < markers.cols(); col++) {
+                // 获取各个点的颜色赋值
+                markers.get(row, col, idxv);
+                if (idxv[0] > 0 && idxv[0] <= contours.size()) {
+                    double[] rgb = colors[idxv[0] - 1].val;
+                    dst.put(row, col, new byte[]{(byte) rgb[0], (byte) rgb[1], (byte) rgb[2]});
+                } else {
+                    dst.put(row, col, new byte[]{(byte) 0, (byte) 0, (byte) 0});
+                }
+            }
+        }
+        ImageUI dstUI = new ImageUI();
+        dstUI.imshow("显示出分割边缘的图像", dst);
     }
 }

@@ -9,7 +9,7 @@ import java.awt.*;
  * @date        : 2017/11/14 21:09
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson2Graphics2D extends JComponent {
+public class Lesson02Graphics2D extends JComponent {
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -26,7 +26,7 @@ public class Lesson2Graphics2D extends JComponent {
         // 设置面板布局
         frame.getContentPane().setLayout(new BorderLayout());
         // 控件处于中间的位置
-        frame.getContentPane().add(new Lesson2Graphics2D(), BorderLayout.CENTER);
+        frame.getContentPane().add(new Lesson02Graphics2D(), BorderLayout.CENTER);
         // 设置退出动作
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // 设置面板的大小

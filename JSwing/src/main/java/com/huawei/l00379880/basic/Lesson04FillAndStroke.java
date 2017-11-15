@@ -94,7 +94,71 @@ public class Lesson04FillAndStroke extends JComponent {
      * 绘制椭圆
      */
     public void drawOval() {
+        // 这里的this代指这个类new出来的JFrame对象,其宽度和高度是自己设置的
+        image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        // 创建绘图对象
+        Graphics2D image2d = image.createGraphics();
+        // 反锯齿效果,不加这一句圆弧的边全是锯齿,很难看地
+        image2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        image2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+        // 绘制圆和椭圆,通过调整宽高比即可,width=height为圆,width!=height为椭圆
+        // width>height为躺着的椭圆,width<height为站着的椭圆
+        image2d.setColor(Color.YELLOW);
+        image2d.fillOval(10, 10, 150, 200);
+        image2d.setColor(Color.RED);
+        image2d.drawOval(10, 10, 150, 200);
+    }
+
+    /**
+     * 绘制圆角矩形
+     */
+    public void drawRoundRect() {
+        // 这里的this代指这个类new出来的JFrame对象,其宽度和高度是自己设置的
+        image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        // 创建绘图对象
+        Graphics2D image2d = image.createGraphics();
+        // 反锯齿效果,不加这一句圆弧的边全是锯齿,很难看地
+        image2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        image2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // 绘制圆角矩形
+        image2d.setColor(Color.YELLOW);
+        image2d.fillRoundRect(10, 10, 250, 200, 20, 20);
+        image2d.setColor(Color.RED);
+        image2d.drawRoundRect(10, 10, 250, 200, 20, 20);
+    }
+
+    /**
+     * 绘制不规则多边形
+     */
+    void drawPolygon() {
+        int[] xpoints = new int[]{10, 20, 30, 40, 50, 60, 100, 150, 80, 40, 10};
+        int[] ypoints = new int[]{10, 300, 240, 200, 180, 170, 150, 80, 50, 10};
+        // 这里的this代指这个类new出来的JFrame对象,其宽度和高度是自己设置的
+        image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        // 创建绘图对象
+        Graphics2D image2d = image.createGraphics();
+        // 反锯齿效果,不加这一句圆弧的边全是锯齿,很难看地
+        image2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        image2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        image2d.setColor(Color.YELLOW);
+        image2d.fillPolygon(xpoints, ypoints, 10);
+        image2d.setColor(Color.RED);
+        image2d.drawPolygon(xpoints, ypoints, 10);
+    }
+
+    void drawLine() {
+        // 这里的this代指这个类new出来的JFrame对象,其宽度和高度是自己设置的
+        image = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        // 创建绘图对象
+        Graphics2D image2d = image.createGraphics();
+        // 反锯齿效果,不加这一句圆弧的边全是锯齿,很难看地
+        image2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        image2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+
+        image2d.setColor(Color.RED);
+        image2d.drawLine(10, 10, 200, 200);
     }
 
     public static void main(String[] args) {
@@ -107,8 +171,9 @@ public class Lesson04FillAndStroke extends JComponent {
         okBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // 这个调用各种drawXXX(drawRoundRect、drawOval、drawRect等)函数进行绘图即可
+                mycanvas.drawPolygon();
                 // 记得要重新绘图
-                mycanvas.drawArc();
                 mycanvas.repaint();
             }
         });

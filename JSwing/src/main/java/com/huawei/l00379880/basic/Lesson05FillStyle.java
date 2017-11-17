@@ -16,7 +16,7 @@ import java.net.URL;
  * @date        : 2017/11/15 16:37
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson04FillStyle extends JComponent {
+public class Lesson05FillStyle extends JComponent {
     private BufferedImage image;
 
     @Override
@@ -121,7 +121,7 @@ public class Lesson04FillStyle extends JComponent {
         JFrame frame = new JFrame();
         frame.setTitle("填充与描边");
 
-        Lesson04FillStyle mycanvas = new Lesson04FillStyle();
+        Lesson05FillStyle mycanvas = new Lesson05FillStyle();
         JButton okBtn = new JButton("绘图");
         okBtn.addActionListener(new ActionListener() {
             @Override

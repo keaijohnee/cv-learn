@@ -1,14 +1,9 @@
 package com.huawei.l00379880.basic;
 
-import sun.security.provider.SHA;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -20,11 +15,11 @@ import java.net.URL;
  * @date        : 2017/11/15 20:57
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson05AffineTransform extends JComponent {
+public class Lesson06AffineTransform extends JComponent {
     private BufferedImage image;
     private Shape myShape;
 
-    public Lesson05AffineTransform() {
+    public Lesson06AffineTransform() {
         this.myShape = new Rectangle(-100, -100, 200, 200);
     }
 
@@ -64,7 +59,7 @@ public class Lesson05AffineTransform extends JComponent {
         // 缩小到原来的一半.注意不要用setToScale,setToXXX函数会清除前面的所有特效.类似的setToRotate也是同样的效果
         atf.scale(0.5, 0.5);
         Shape tempShape = atf.createTransformedShape(myShape);
-        image2d.setColor(Color.RED);
+        image2d.setPaint(Color.RED);
         image2d.draw(tempShape);
         // 恢复当前的transform对象
         image2d.setTransform(saveXForm);
@@ -103,16 +98,12 @@ public class Lesson05AffineTransform extends JComponent {
         JFrame frame = new JFrame();
         frame.setTitle("图形变换");
 
-        Lesson05AffineTransform mycanvas = new Lesson05AffineTransform();
+        Lesson06AffineTransform mycanvas = new Lesson06AffineTransform();
         JButton okBtn = new JButton("绘图");
         okBtn.addActionListener(e -> {
-            try {
-                mycanvas.affineTransformImage();
-                // 记得要重新绘图
-                mycanvas.repaint();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
+            mycanvas.affineTransformAll();
+            // 记得要重新绘图
+            mycanvas.repaint();
         });
         // 设置面板布局
         frame.getContentPane().setLayout(new BorderLayout());

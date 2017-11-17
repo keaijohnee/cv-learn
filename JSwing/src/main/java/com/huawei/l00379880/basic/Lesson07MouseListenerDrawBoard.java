@@ -8,19 +8,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 /***********************************************************
- * @Description : 鼠标响应事件(Pressed、Released、Dragged)
+ * @Description : 鼠标响应事件(Pressed、Released、Dragged),实现一个画图板
  * @author      : 梁山广
  * @date        : 2017/11/16 8:58
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson07MouseListener extends MouseAdapter {
+public class Lesson07MouseListenerDrawBoard extends MouseAdapter {
 
     private int startX;
     private int startY;
+
     private List<Point> pointList;
+
     private JComponent mycanvas;
 
-    public Lesson07MouseListener(JComponent mycanvas) {
+    public List<Point> getPointList() {
+        return pointList;
+    }
+
+    public void setPointList(List<Point> pointList) {
+        this.pointList = pointList;
+    }
+
+    public Lesson07MouseListenerDrawBoard(JComponent mycanvas) {
         this.startX = -1;
         this.startY = -1;
         this.pointList = new ArrayList<>();
@@ -29,6 +39,7 @@ public class Lesson07MouseListener extends MouseAdapter {
 
     @Override
     public void mousePressed(MouseEvent e) {
+        // 单击清空所有的点
         pointList.clear();
         Point p = e.getPoint();
         startX = p.x;
@@ -51,7 +62,4 @@ public class Lesson07MouseListener extends MouseAdapter {
         this.mycanvas.repaint();
     }
 
-    public static void main(String[] args) {
-
-    }
 }

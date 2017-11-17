@@ -2,34 +2,42 @@ package com.huawei.l00379880.basic;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
+import java.util.List;
 
 /***********************************************************
- * @Description : 我自己的鼠标绘制类
+ * @Description : 简单的绘图工具
  * @author      : 梁山广
  * @date        : 2017/11/17 17:07
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson07MyPaint extends JComponent {
-    private BufferedImage image;
+public class Lesson07MyPaintDraw extends JComponent {
+    private Lesson07MouseListenerDrawBoard listener;
+
+    public Lesson07MyPaintDraw() {
+        listener = new Lesson07MouseListenerDrawBoard(this);
+        this.addMouseListener(listener);
+        this.addMouseMotionListener(listener);
+    }
 
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
-        if (image == null) {
-            return;
+        List<Point> pointList = listener.getPointList();
+        // 设置线宽
+        BasicStroke bs = new BasicStroke(5);
+        g2d.setStroke(bs);
+        // 设置颜色
+        g2d.setColor(Color.RED);
+        for (int i = 1; i < pointList.size(); i++) {
+            g2d.drawLine(pointList.get(i - 1).x, pointList.get(i - 1).y, pointList.get(i).x, pointList.get(i).y);
         }
-        g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
     }
 
     public static void main(String[] args) {
         // 新建组件的载体
         JFrame frame = new JFrame();
         frame.setTitle("鼠标响应事件");
-        Lesson07MyPaint mycanvas = new Lesson07MyPaint();
-        Lesson07MouseListener controller = new Lesson07MouseListener(mycanvas);
-        mycanvas.addMouseListener(controller);
-        mycanvas.addMouseMotionListener(controller);
+        Lesson07MyPaintDraw mycanvas = new Lesson07MyPaintDraw();
         // 设置面板布局
         frame.getContentPane().setLayout(new BorderLayout());
         // 控件处于中间的位置

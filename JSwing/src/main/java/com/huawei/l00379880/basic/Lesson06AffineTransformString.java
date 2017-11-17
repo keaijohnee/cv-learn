@@ -9,13 +9,13 @@ import java.io.IOException;
 import java.net.URL;
 
 /***********************************************************
- * @Description : 图片的各种仿射变换,注意图片要放在target目录里
+ * @Description : 字符串的各种仿射变换,注意图片要放在target目录里
  *                对应的class文件所在的目录
  * @author      : 梁山广
- * @date        : 2017/11/17 19:02
+ * @date        : 2017/1/17 19:21
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
-public class Lesson06AffineTransformImage extends JComponent {
+public class Lesson06AffineTransformString extends JComponent {
     private BufferedImage image;
 
     @Override
@@ -46,7 +46,7 @@ public class Lesson06AffineTransformImage extends JComponent {
         // 缩小到原来的一半.注意不要用setToScale,setToXXX函数会清除前面的所有特效.类似的setToRotate也是同样的效果
         atf.scale(2, 2);
         g2d.setTransform(atf);
-        g2d.drawImage(image, -100, -100, image.getWidth(), image.getHeight(), null);
+        g2d.drawString("仿射变化的绘图", -50, 0);
         // 恢复当前的transform对象
         g2d.setTransform(saveXForm);
     }
@@ -57,7 +57,7 @@ public class Lesson06AffineTransformImage extends JComponent {
         // 设置面板布局
         frame.getContentPane().setLayout(new BorderLayout());
         // 控件处于中间的位置
-        frame.getContentPane().add(new Lesson06AffineTransformImage(), BorderLayout.CENTER);
+        frame.getContentPane().add(new Lesson06AffineTransformString(), BorderLayout.CENTER);
         // 设置退出动作
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         // 设置面板的大小

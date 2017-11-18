@@ -3,8 +3,6 @@ package com.huawei.l00379880.basic;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.net.URL;
@@ -47,7 +45,7 @@ public class Lesson08Watermark extends JComponent {
         // 设置字体的大小与样式.第二个参数为字体的样式
         Font font = new Font("微软雅黑", Font.BOLD, 24);
         g2d.setFont(font);
-        g2d.drawString("一个可爱的橘猫", 260, 680);
+        g2d.drawString("a lovely cat", 260, 680);
     }
 
     public static void main(String[] args) {

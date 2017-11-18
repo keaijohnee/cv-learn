@@ -62,8 +62,6 @@ public class SinCityFilter extends AbstractImageOptionFilter {
 
             }
         }
-        Graphics2D g2d = src.createGraphics();
-        g2d.drawString("哈哈", 100, 200);
         setRGB(dest, 0, 0, width, height, output);
         return dest;
     }

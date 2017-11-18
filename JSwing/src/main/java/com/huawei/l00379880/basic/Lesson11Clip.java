@@ -5,6 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,26 +21,22 @@ public class Lesson11Clip extends JComponent implements ActionListener {
     private JButton processBtn;
     private JButton processBtn2;
     private BufferedImage image;
+    private boolean clip = false;
 
     public Lesson11Clip(BufferedImage image) {
         this.image = image;
     }
 
-    public JButton getButton() {
-        processBtn = new JButton("Process");
-        processBtn.addActionListener(this);
-        return processBtn;
-    }
-
-    public JButton getButton2() {
-        processBtn2 = new JButton("Process2");
-        processBtn2.addActionListener(this);
-        return processBtn2;
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        // 裁剪只能放到paintComponent中执行,因为裁剪形状是在drawImage之前的.外部调用函数在paintComponent之后自然也就在drawImage之后了
+        if (clip) {
+            Shape shape = new Ellipse2D.Double(120, 50, 200, 200);
+            g2d.setClip(shape);
+        }
         if (image != null) {
             g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
         }
@@ -56,32 +53,41 @@ public class Lesson11Clip extends JComponent implements ActionListener {
         this.repaint();
     }
 
+    public JButton getButton() {
+        processBtn = new JButton("裁剪");
+        processBtn.addActionListener(this);
+        return processBtn;
+    }
+
+    public JButton getButton2() {
+        processBtn2 = new JButton("Process2");
+        processBtn2.addActionListener(this);
+        return processBtn2;
+    }
+
+    /**
+     * clip操作属于初始化操作,不能放到外面的函数中进行
+     */
     public void process() {
-        Graphics2D g2d = image.createGraphics();
-        Font font = new Font("微软雅黑", Font.BOLD + Font.ITALIC, 34);
-        // 设置透明度,第一个参数有16种模式可选,SRC_OVER最常用,此外SRC_ATOP、CLEAR(把交集部分从第一张中抠除)、
-        // SRC_IN(如果两张图片相交把交集给第一张图片)、SRC_OUT(将交集扣除)、
-        // 可以利用透明度实现淡入淡出动画
-        AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
-        g2d.setComposite(ac);
-        g2d.setColor(Color.RED);
-        g2d.setFont(font);
-        g2d.drawString("欧冠决赛", 100, 100);
-        BasicStroke bs = new BasicStroke(5);
-        g2d.setStroke(bs);
-        g2d.setColor(Color.GREEN);
-        g2d.drawRoundRect(80, 62, 180, 50, 20, 20);
+        // 设置形状的操作必须放在上面进行
+        this.clip = true;
         System.out.println("操作1完成");
     }
 
+    /**
+     * 添加水印文字
+     */
     public void process2() {
         Graphics2D g2d = image.createGraphics();
         // 设置透明度,第一个参数有16种模式可选
         AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f);
         g2d.setComposite(ac);
-        Font font = new Font("微软雅黑", Font.BOLD + Font.ITALIC, 44);
+        Font font = new Font("微软雅黑", Font.BOLD + Font.ITALIC, 24);
         g2d.setFont(font);
-        g2d.drawString("哈特防守伊瓜因", 100, 200);
+        g2d.drawString("迪丽热巴", 150, 230);
+        g2d.setPaint(Color.GREEN);
+        g2d.setStroke(new BasicStroke(10));
+        g2d.draw(new Ellipse2D.Double(123, 53, 195, 195));
         try {
             saveImage();
         } catch (IOException e) {
@@ -96,7 +102,7 @@ public class Lesson11Clip extends JComponent implements ActionListener {
     }
 
     public static void main(String[] args) throws IOException {
-        File f = new File(ROOT_PATH + "target.png");
+        File f = new File(ROOT_PATH + "dilireba.png");
         BufferedImage image = ImageIO.read(f);
         JFrame frame = new JFrame();
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

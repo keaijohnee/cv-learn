@@ -72,7 +72,7 @@ public class Lesson08WaterMark extends JComponent implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        JOptionPane.showMessageDialog(null, "操作1完成");
+        System.out.println("操作1完成");
     }
 
     public void process2() {
@@ -80,7 +80,7 @@ public class Lesson08WaterMark extends JComponent implements ActionListener {
         Font font = new Font("微软雅黑", Font.BOLD + Font.ITALIC, 44);
         g2d.setFont(font);
         g2d.drawString("迪丽热巴2", 100, 200);
-        JOptionPane.showMessageDialog(null, "操作2完成");
+        System.out.println("操作2完成!");
     }
 
     public void saveImage() throws IOException {

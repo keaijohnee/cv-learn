@@ -1,4 +1,4 @@
-package com.huawei.l00379880.basic;
+package com.huawei.l00379880.middle;
 
 import org.opencv.core.Mat;
 
@@ -32,6 +32,17 @@ public class ImageUI extends JComponent {
 
     public void imshow(String title, Mat src) {
         this.image = convert2BufferedImage(src);
+        JDialog ui = new JDialog();
+        ui.setTitle(title);
+        ui.getContentPane().setLayout(new BorderLayout());
+        ui.getContentPane().add(this, BorderLayout.CENTER);
+        ui.setSize(image.getWidth() + 16, image.getHeight() + 38);
+        ui.setVisible(true);
+        this.repaint();
+    }
+
+    public void imshow(String title, BufferedImage image) {
+        this.image = image;
         JDialog ui = new JDialog();
         ui.setTitle(title);
         ui.getContentPane().setLayout(new BorderLayout());

@@ -16,12 +16,13 @@ import java.io.IOException;
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
 public class CommonPanel extends JComponent implements ActionListener {
-    public static final String ROOT_PATH = "D:\\l00379880\\GithubProjects\\images\\";
+    public static final String ROOT_PATH = "/Users/liangshanguang/downloads/";
     private BufferedImage image;
     private JButton lesson03Btn;
     private JButton lesson04Btn;
     private JButton lesson05Btn;
     private JButton lesson06Btn;
+    private JButton lesson07Btn;
     private JButton saveBtn;
 
     public CommonPanel(BufferedImage image) {
@@ -56,6 +57,10 @@ public class CommonPanel extends JComponent implements ActionListener {
         if (e.getSource() == lesson06Btn) {
             Lesson06MathWhiteImage.process(image);
         }
+        // 第7课:空间转换
+        if (e.getSource() == lesson07Btn) {
+            Lesson07ColorSpaceExchange.process(image);
+        }
         if (e.getSource() == saveBtn) {
             CommonMethods.save(image, ROOT_PATH + "middle\\target_result.png");
         }
@@ -85,6 +90,11 @@ public class CommonPanel extends JComponent implements ActionListener {
         lesson06Btn.addActionListener(this);
         return lesson06Btn;
     }
+    public JButton getLesson07Btn() {
+        lesson07Btn = new JButton("7空间转换");
+        lesson07Btn.addActionListener(this);
+        return lesson07Btn;
+    }
 
     public JButton getSaveBtn() {
         saveBtn = new JButton("保存");
@@ -94,7 +104,7 @@ public class CommonPanel extends JComponent implements ActionListener {
 
 
     public static void main(String[] args) throws IOException {
-        File file = new File(Lesson06MathWhiteImage.imgPath);
+        File file = new File(Lesson07ColorSpaceExchange.imgPath);
         BufferedImage image = ImageIO.read(file);
         JFrame frame = new JFrame("图像的基本操作");
         // 添加图片到面板
@@ -106,6 +116,7 @@ public class CommonPanel extends JComponent implements ActionListener {
         jPanel.add(panel.getLesson04Btn());
         jPanel.add(panel.getLesson05Btn());
         jPanel.add(panel.getLesson06Btn());
+        jPanel.add(panel.getLesson07Btn());
         jPanel.add(panel.getSaveBtn());
         frame.add(jPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

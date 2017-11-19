@@ -1,4 +1,4 @@
-package com.huawei.l00379880.middle;
+package com.huawei.l00379880.mylib;
 
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;

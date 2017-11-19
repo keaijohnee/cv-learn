@@ -1,102 +1,114 @@
 package com.huawei.l00379880.middle;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
 import java.io.File;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
+/***********************************************************
+ * @Description : 图像处理面板
+ * @author      : 梁山广
+ * @date        : 2017/11/19 14:59
+ * @email       : liangshanguang2@gmail.com
+ ***********************************************************/
 public class ImagePanel extends JComponent implements ActionListener {
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
-    private JButton processBtn;
+    private static final String ROOT_PATH = "D:\\l00379880\\GithubProjects\\images\\";
     private BufferedImage image;
-    private BufferedImage resultImage;
-    private int[] histdata;
+    private JButton drawBtn;
+    private JButton processBtn;
+    private JButton saveBtn;
 
     public ImagePanel(BufferedImage image) {
         this.image = image;
-    }
-
-    public JButton getButton() {
-        processBtn = new JButton("Process");
-        processBtn.addActionListener(this);
-        return processBtn;
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         Graphics2D g2d = (Graphics2D) g;
         if (image != null) {
+            g2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2d.drawImage(image, 0, 0, image.getWidth(), image.getHeight(), null);
         }
-        if (resultImage != null) {
-            g2d.drawImage(resultImage, image.getWidth() + 10, 0, resultImage.getWidth(), resultImage.getHeight(), null);
-        }
-        renderHistogram(g2d);
     }
 
-    private void renderHistogram(Graphics2D g2d) {
-        if (histdata != null) {
-            int xstart = image.getWidth() + 50;
-            int ystart = image.getHeight();
-
-            g2d.setPaint(Color.BLACK);
-            g2d.drawLine(xstart, 0, xstart, ystart);// Y Axis
-            g2d.drawLine(xstart, ystart, xstart + 256, ystart); // X Axis
-
-            // find max value
-            int max = -1;
-            int min = 0;
-            for (int i = 0; i < histdata.length; i++) {
-                max = Math.max(max, histdata[i]);
-            }
-
-            float delta = max - min;
-            g2d.setPaint(Color.GREEN);
-            for (int i = 0; i < histdata.length; i++) {
-                float v1 = histdata[i] - min;
-                int value = (int) ((v1 / delta) * 256);
-                g2d.drawLine(xstart + i + 1, ystart, xstart + i + 1, ystart - value); // X
-                // Axis
-            }
-
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource() == drawBtn) {
+            this.draw();
         }
+        if (e.getSource() == saveBtn) {
+            this.save();
+        }
+        if (e.getSource() == processBtn) {
+            this.process();
+        }
+        this.repaint();
     }
 
-    public void process() {
-        SinCityFilter filter = new SinCityFilter();
-        resultImage = filter.process(this.image);
-
-        // histdata = filter.getHistData();
-        /*for (int i = 0; i < histdata.length; i++) {
-            System.out.println("gray value " + i + " :" + histdata[i]);
-		}*/
+    public JButton getDrawBtn() {
+        drawBtn = new JButton("绘图");
+        drawBtn.addActionListener(this);
+        return drawBtn;
     }
 
-    public BufferedImage createCompatibleDestImage(BufferedImage src, ColorModel dstCM) {
-        if (dstCM == null) {
-            dstCM = src.getColorModel();
-        }
-        return new BufferedImage(dstCM, dstCM.createCompatibleWritableRaster(src.getWidth(), src.getHeight()),
-                dstCM.isAlphaPremultiplied(), null);
+    public JButton getProcessBtn() {
+        processBtn = new JButton("处理");
+        processBtn.addActionListener(this);
+        return processBtn;
+    }
+
+    public JButton getSaveBtn() {
+        saveBtn = new JButton("保存");
+        saveBtn.addActionListener(this);
+        return saveBtn;
     }
 
     /**
-     * A convenience method for getting ARGB pixels from an image. This tries to
-     * avoid the performance penalty of BufferedImage.getRGB unmanaging the
-     * image.
+     * 绘制图像
+     */
+    public void draw() {
+        Graphics2D g2d = image.createGraphics();
+        g2d.setColor(Color.GREEN);
+        g2d.setStroke(new BasicStroke(5));
+        g2d.drawOval(100, 100, 200, 200);
+        System.out.println("绘图成功!!");
+    }
+
+    /**
+     * 像素处理
+     */
+    public void process() {
+
+    }
+
+    /**
+     * 保存图片
+     */
+    public void save() {
+        File f = new File(ROOT_PATH + "middle\\target_result.png");
+        try {
+            ImageIO.write(image, "png", f);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        System.out.println("保存成功!!");
+    }
+
+    /**
+     * 获取指定区域的像素数组(每个点的RGB为一个组合起来的大整数),屏蔽了整型图片和非整型图片的区别
+     *
+     * @param image  原始图片
+     * @param x      取样处起点横坐标
+     * @param y      样处起始点纵坐标
+     * @param width  取样宽度
+     * @param height 取样高度
+     * @param pixels 取样的像素点数据存储的数组,用于返回像素
+     * @return 将取好值的pixels数组返回
      */
     public int[] getRGB(BufferedImage image, int x, int y, int width, int height, int[] pixels) {
         int type = image.getType();
@@ -107,9 +119,14 @@ public class ImagePanel extends JComponent implements ActionListener {
     }
 
     /**
-     * A convenience method for setting ARGB pixels in an image. This tries to
-     * avoid the performance penalty of BufferedImage.setRGB unmanaging the
-     * image.
+     * 设置取样区的像素
+     *
+     * @param image  原始图片
+     * @param x      取样处起点横坐标
+     * @param y      样处起始点纵坐标
+     * @param width  取样宽度
+     * @param height 取样高度
+     * @param pixels 取样的像素点数据存储的数组,用于给该区域设置像素
      */
     public void setRGB(BufferedImage image, int x, int y, int width, int height, int[] pixels) {
         int type = image.getType();
@@ -121,28 +138,20 @@ public class ImagePanel extends JComponent implements ActionListener {
     }
 
     public static void main(String[] args) throws IOException {
-        String rootPath = "D:\\l00379880\\GithubProjects\\images\\";
-        File f = new File(rootPath + "dilireba.png");
-        BufferedImage image = ImageIO.read(f);
-        JFrame frame = new JFrame();
+        File file = new File(ROOT_PATH + "target.png");
+        BufferedImage image = ImageIO.read(file);
+        JFrame frame = new JFrame("图像的基本操作");
+        ImagePanel panel = new ImagePanel(image);
+        frame.add(panel, BorderLayout.CENTER);
+        frame.add(panel.getDrawBtn(), BorderLayout.SOUTH);
+        JPanel jPanel = new JPanel();
+        jPanel.add(panel.getDrawBtn());
+        jPanel.add(panel.getProcessBtn());
+        jPanel.add(panel.getSaveBtn());
+        frame.add(jPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        ImagePanel imp = new ImagePanel(image);
-        frame.getContentPane().add(imp, BorderLayout.CENTER);
-        JPanel flowPanel = new JPanel();
-        flowPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-        flowPanel.add(imp.getButton());
-        frame.getContentPane().add(flowPanel, BorderLayout.SOUTH);
-        frame.setSize(image.getWidth() * 2 + 50, image.getHeight() + 50);
-        frame.setTitle("演示");
+        frame.setSize(image.getWidth() + 16, image.getHeight() + 38);
         frame.setVisible(true);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == processBtn) {
-            this.process();
-            this.repaint();
-        }
     }
 
 }

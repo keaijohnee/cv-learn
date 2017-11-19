@@ -93,8 +93,6 @@ public class CommonPanel extends JComponent implements ActionListener {
     }
 
 
-
-
     public static void main(String[] args) throws IOException {
         File file = new File(Lesson06MathWhiteImage.imgPath);
         BufferedImage image = ImageIO.read(file);

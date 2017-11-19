@@ -13,6 +13,7 @@ import java.awt.image.BufferedImage;
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
 public class Lesson03PixelOperation {
+    public static String imgPath = CommonPanel.ROOT_PATH + "target.png";
     public static void process(BufferedImage image) {
         int width = image.getWidth();
         int height = image.getHeight();

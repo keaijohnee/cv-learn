@@ -16,10 +16,11 @@ import java.io.IOException;
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
 public class CommonPanel extends JComponent implements ActionListener {
-    private static final String ROOT_PATH = "D:\\l00379880\\GithubProjects\\images\\";
+    public static final String ROOT_PATH = "D:\\l00379880\\GithubProjects\\images\\";
     private BufferedImage image;
     private JButton lesson03Btn;
     private JButton lesson04Btn;
+    private JButton lesson05Btn;
     private JButton saveBtn;
 
     public CommonPanel(BufferedImage image) {
@@ -42,8 +43,13 @@ public class CommonPanel extends JComponent implements ActionListener {
         if (e.getSource() == lesson03Btn) {
             Lesson03PixelOperation.process(image);
         }
+        // 第四课:图像统计,lena的灰度图
         if (e.getSource() == lesson04Btn) {
             Lesson04PixelStatistic.process(image);
+        }
+        // 第五课:基本的图像运算(加减乘除开方取对数等),多次点击可以看到叠加效果
+        if (e.getSource() == lesson05Btn) {
+            Lesson05MathBasic.process(image);
         }
         if (e.getSource() == saveBtn) {
             CommonMethods.save(image, ROOT_PATH + "middle\\target_result.png");
@@ -63,6 +69,12 @@ public class CommonPanel extends JComponent implements ActionListener {
         return lesson04Btn;
     }
 
+    public JButton getLesson05Btn() {
+        lesson05Btn = new JButton("5数学运算");
+        lesson05Btn.addActionListener(this);
+        return lesson05Btn;
+    }
+
     public JButton getSaveBtn() {
         saveBtn = new JButton("保存");
         saveBtn.addActionListener(this);
@@ -71,7 +83,7 @@ public class CommonPanel extends JComponent implements ActionListener {
 
 
     public static void main(String[] args) throws IOException {
-        File file = new File(ROOT_PATH + "target.png");
+        File file = new File(Lesson03PixelOperation.imgPath);
         BufferedImage image = ImageIO.read(file);
         JFrame frame = new JFrame("图像的基本操作");
         // 添加图片到面板
@@ -81,6 +93,7 @@ public class CommonPanel extends JComponent implements ActionListener {
         JPanel jPanel = new JPanel();
         jPanel.add(panel.getLesson03Btn());
         jPanel.add(panel.getLesson04Btn());
+        jPanel.add(panel.getLesson05Btn());
         jPanel.add(panel.getSaveBtn());
         frame.add(jPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

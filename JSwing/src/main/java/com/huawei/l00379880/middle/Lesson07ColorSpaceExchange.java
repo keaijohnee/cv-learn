@@ -1,5 +1,6 @@
 package com.huawei.l00379880.middle;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /***********************************************************
@@ -36,12 +37,22 @@ public class Lesson07ColorSpaceExchange {
                 int channelG = (pixel >> 8) & 0xff;
                 int channelB = pixel & 0xff;
 
-                double[] yCbCr=rgb2CbCr(channelR,channelG,channelB);
-                int[] rgb=YCbCr2rgb(yCbCr[0],yCbCr[1],yCbCr[2]);
-                channelR=rgb[0];
-                channelG=rgb[1];
-                channelB=rgb[2];
+                // RGB <==> YCbCr
+                // 每一次两种空间的转换都会损失一定的图像精度，因为有double向int的强制转换，所以图像转换多了会越来越黑
+                double[] yCbCr = rgb2CbCr(channelR, channelG, channelB);
+                int[] rgb = YCbCr2rgb(yCbCr[0], yCbCr[1], yCbCr[2]);
+                channelR = rgb[0];
+                channelG = rgb[1];
+                channelB = rgb[2];
 
+                // RGB <===> HSB,因为是官方自带地，所以是无损转换地
+                float[] hsbVal = new float[3];
+                Color.RGBtoHSB(channelR, channelG, channelB, hsbVal);
+                int color = Color.HSBtoRGB(hsbVal[0], hsbVal[1], hsbVal[2]);
+                Color c = new Color(color);
+                channelR = c.getRed();
+                channelG = c.getGreen();
+                channelB = c.getBlue();
                 pixels[index] = (channelA << 24) | (channelR << 16) | (channelG << 8) | (channelB);
             }
         }

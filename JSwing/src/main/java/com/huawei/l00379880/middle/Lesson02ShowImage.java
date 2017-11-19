@@ -1,7 +1,5 @@
 package com.huawei.l00379880.middle;
 
-import com.huawei.l00379880.mylib.ImageUI;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;

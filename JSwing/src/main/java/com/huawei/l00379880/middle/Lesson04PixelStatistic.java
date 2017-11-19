@@ -1,8 +1,5 @@
 package com.huawei.l00379880.middle;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import java.awt.image.BufferedImage;
 
 /***********************************************************************

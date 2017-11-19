@@ -21,6 +21,7 @@ public class CommonPanel extends JComponent implements ActionListener {
     private JButton lesson03Btn;
     private JButton lesson04Btn;
     private JButton lesson05Btn;
+    private JButton lesson06Btn;
     private JButton saveBtn;
 
     public CommonPanel(BufferedImage image) {
@@ -51,6 +52,10 @@ public class CommonPanel extends JComponent implements ActionListener {
         if (e.getSource() == lesson05Btn) {
             Lesson05MathBasic.process(image);
         }
+        // 第6课:美白
+        if (e.getSource() == lesson06Btn) {
+            Lesson06MathWhiteImage.process(image);
+        }
         if (e.getSource() == saveBtn) {
             CommonMethods.save(image, ROOT_PATH + "middle\\target_result.png");
         }
@@ -75,6 +80,12 @@ public class CommonPanel extends JComponent implements ActionListener {
         return lesson05Btn;
     }
 
+    public JButton getLesson06Btn() {
+        lesson06Btn = new JButton("6美白");
+        lesson06Btn.addActionListener(this);
+        return lesson06Btn;
+    }
+
     public JButton getSaveBtn() {
         saveBtn = new JButton("保存");
         saveBtn.addActionListener(this);
@@ -82,8 +93,10 @@ public class CommonPanel extends JComponent implements ActionListener {
     }
 
 
+
+
     public static void main(String[] args) throws IOException {
-        File file = new File(Lesson03PixelOperation.imgPath);
+        File file = new File(Lesson06MathWhiteImage.imgPath);
         BufferedImage image = ImageIO.read(file);
         JFrame frame = new JFrame("图像的基本操作");
         // 添加图片到面板
@@ -94,6 +107,7 @@ public class CommonPanel extends JComponent implements ActionListener {
         jPanel.add(panel.getLesson03Btn());
         jPanel.add(panel.getLesson04Btn());
         jPanel.add(panel.getLesson05Btn());
+        jPanel.add(panel.getLesson06Btn());
         jPanel.add(panel.getSaveBtn());
         frame.add(jPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

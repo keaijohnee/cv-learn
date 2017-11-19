@@ -12,6 +12,12 @@ public class Lesson05MathBasic {
     public static String imgPath = CommonPanel.ROOT_PATH + "example.jpg";
 
     public static void process(BufferedImage image) {
+
+        // 把元素进行数学处理,0-加,1-减,2-乘,3-除,4-取对数,5-开平方,6-取平方
+        int opType = 6;
+        int opValue = 20;
+
+        // 图像的的实际操作
         int width = image.getWidth();
         int height = image.getHeight();
         int[] pixels = new int[width * height];
@@ -34,9 +40,6 @@ public class Lesson05MathBasic {
                 int channelG = (pixel >> 8) & 0xff;
                 int channelB = pixel & 0xff;
 
-                // 把元素进行数学处理,0-加,1-减,2-乘,3-除,4-取对数,5-开平方,6-取平方
-                int opType = 5;
-                int opValue = 20;
                 channelR = imgMath(channelR, opType, opValue);
                 channelG = imgMath(channelG, opType, opValue);
                 channelB = imgMath(channelB, opType, opValue);

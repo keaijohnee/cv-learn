@@ -11,7 +11,7 @@ import java.awt.image.BufferedImage;
  * @email       : liangshanguang2@gmail.com
  *************************************************************************/
 public class Lesson06MathWhiteImage {
-    public static String imgPath = CommonPanel.ROOT_PATH + "example.jpg";
+    public static String imgPath = CommonPanel.ROOT_PATH + "fuck.jpg";
 
     public static void process(BufferedImage image) {
 

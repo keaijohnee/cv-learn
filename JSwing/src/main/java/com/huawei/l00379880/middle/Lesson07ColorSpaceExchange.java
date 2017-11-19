@@ -9,12 +9,9 @@ import java.awt.image.BufferedImage;
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
 public class Lesson07ColorSpaceExchange {
-    public static String imgPath = CommonPanel.ROOT_PATH + "example.jpg";
+    public static String imgPath = CommonPanel.ROOT_PATH + "myfuck.jpg";
 
     public static void process(BufferedImage image) {
-
-        // 图像美白的参数,越接近1美白效果越好但是为1的话就会一片黑了
-        double beta = 1.02;
 
         // 图像的的实际操作
         int width = image.getWidth();
@@ -39,6 +36,11 @@ public class Lesson07ColorSpaceExchange {
                 int channelG = (pixel >> 8) & 0xff;
                 int channelB = pixel & 0xff;
 
+                double[] yCbCr=rgb2CbCr(channelR,channelG,channelB);
+                int[] rgb=YCbCr2rgb(yCbCr[0],yCbCr[1],yCbCr[2]);
+                channelR=rgb[0];
+                channelG=rgb[1];
+                channelB=rgb[2];
 
                 pixels[index] = (channelA << 24) | (channelR << 16) | (channelG << 8) | (channelB);
             }
@@ -54,7 +56,36 @@ public class Lesson07ColorSpaceExchange {
      * @param channelB B通道像素
      * @return 处理完的RGB通道像素值, 返回数组内的每个元素的意义也不再是RGB而是YCbCr了
      */
-    public int[] rgb2CbCr(int channelR, int channelG, int channelB) {
-        return null;
+    public static double[] rgb2CbCr(int channelR, int channelG, int channelB) {
+        double y = 0.183 * channelR + 0.614 * channelG + 0.062 * channelB;
+        double Cb = -0.101 * channelR - 0.338 * channelG + 0.439 * channelB + 128;
+        double Cr = 0.439 * channelR - 0.399 * channelG + 0.040 * channelB + 128;
+        return new double[]{y, Cb, Cr};
+    }
+
+    /**
+     * 把YCbCr空间转换为RGB色彩空间
+     *
+     * @param Y
+     * @param Cb
+     * @param Cr
+     * @return
+     */
+    public static int[] YCbCr2rgb(double Y, double Cb, double Cr) {
+        int channelR = (int) (1.164 * (Y - 16) + 1.793 * (Cr - 128));
+        int channelG = (int) (1.164 * (Y - 16) - 0.534 * (Cr - 128) - 0.213 * (Cb - 128));
+        int channelB = (int) (1.164 * (Y - 16) + 2.115 * (Cb - 128));
+
+        return new int[]{clamp(channelR), clamp(channelG), clamp(channelB)};
+    }
+
+    /**
+     * 把不在0~255范围内的进行合理取舍
+     *
+     * @param value
+     * @return
+     */
+    public static int clamp(int value) {
+        return value < 0 ? 0 : (value > 255 ? 255 : value);
     }
 }

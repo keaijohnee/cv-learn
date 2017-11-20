@@ -16,7 +16,7 @@ import java.io.IOException;
  * @email       : liangshanguang2@gmail.com
  ***********************************************************/
 public class CommonPanel extends JComponent implements ActionListener {
-    public static final String ROOT_PATH = "/Users/liangshanguang/downloads/";
+    public static final String ROOT_PATH = "D:\\l00379880\\GithubProjects\\images\\";
     private BufferedImage image;
     private JButton lesson03Btn;
     private JButton lesson04Btn;

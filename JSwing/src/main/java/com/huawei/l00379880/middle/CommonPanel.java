@@ -104,7 +104,7 @@ public class CommonPanel extends JComponent implements ActionListener {
 
 
     public static void main(String[] args) throws IOException {
-        File file = new File(Lesson07ColorSpaceExchange.imgPath);
+        File file = new File(Lesson06MathWhiteImage.imgPath);
         BufferedImage image = ImageIO.read(file);
         JFrame frame = new JFrame("图像的基本操作");
         // 添加图片到面板

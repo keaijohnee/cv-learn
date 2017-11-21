@@ -23,6 +23,7 @@ public class CommonPanel extends JComponent implements ActionListener {
     private JButton lesson05Btn;
     private JButton lesson06Btn;
     private JButton lesson07Btn;
+    private JButton lesson08Btn;
     private JButton saveBtn;
 
     public CommonPanel(BufferedImage image) {
@@ -61,6 +62,10 @@ public class CommonPanel extends JComponent implements ActionListener {
         if (e.getSource() == lesson07Btn) {
             Lesson07ColorSpaceExchange.process(image);
         }
+        // 第7课:空间转换
+        if (e.getSource() == lesson08Btn) {
+            Lesson08LookUpInTable.process(image);
+        }
         if (e.getSource() == saveBtn) {
             CommonMethods.save(image, ROOT_PATH + "middle\\target_result.png");
         }
@@ -95,6 +100,11 @@ public class CommonPanel extends JComponent implements ActionListener {
         lesson07Btn.addActionListener(this);
         return lesson07Btn;
     }
+    public JButton getLesson08Btn() {
+        lesson08Btn = new JButton("8查找表美白");
+        lesson08Btn.addActionListener(this);
+        return lesson08Btn;
+    }
 
     public JButton getSaveBtn() {
         saveBtn = new JButton("保存");
@@ -117,6 +127,7 @@ public class CommonPanel extends JComponent implements ActionListener {
         jPanel.add(panel.getLesson05Btn());
         jPanel.add(panel.getLesson06Btn());
         jPanel.add(panel.getLesson07Btn());
+        jPanel.add(panel.getLesson08Btn());
         jPanel.add(panel.getSaveBtn());
         frame.add(jPanel, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);

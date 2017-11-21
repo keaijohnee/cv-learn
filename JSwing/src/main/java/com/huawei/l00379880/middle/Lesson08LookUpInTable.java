@@ -6,17 +6,15 @@ import java.awt.image.BufferedImage;
 
 
 /**************************************************************************
- * @Description : 利用数学原理给图片美白,改变beta的值即可,以长雀斑的女人照片为例
- *                图片地址:https://gss0.baidu.com/-fo3dSag_xI4khGko9WTAnF6hhy/zhidao/wh%3D600%2C800/sign=1a2476fbeff81a4c2667e4cfe71a4c61/3812b31bb051f819900fc7c5deb44aed2e73e713.jpg
+ * @Description : 像素查找表,利用空间换时间,这样可以大大加快美白算法的速度
  * @author      : 梁山广
- * @date        : 2017/11/19 20:23
+ * @date        : 2017/11/21 20:28
  * @email       : liangshanguang2@gmail.com
  *************************************************************************/
-public class Lesson06MathWhiteImage {
+public class Lesson08LookUpInTable {
     public static String imgPath = CommonPanel.ROOT_PATH + "example.jpg";
 
     public static void process(BufferedImage image) {
-
         Stopwatch timer = new Stopwatch();
         // 图像美白的参数,越接近1美白效果越好但是为1的话就会一片黑了
         double beta = 1.02;
@@ -26,6 +24,11 @@ public class Lesson06MathWhiteImage {
         int height = image.getHeight();
         int[] pixels = new int[width * height];
         int index = 0;
+        int[] lut = new int[256];
+        for (int i = 0; i < 256; i++) {
+            // 提前对所有的情况都做好处理,0~255都处理了,下面直接用下标调用即可,可以省去很大的运算量
+            lut[i] = imgMath(i, beta);
+        }
         // 获取全部的像素
         CommonMethods.getRGB(image, 0, 0, width, height, pixels);
         for (int row = 0; row < height; row++) {
@@ -44,14 +47,15 @@ public class Lesson06MathWhiteImage {
                 int channelG = (pixel >> 8) & 0xff;
                 int channelB = pixel & 0xff;
 
-                channelR = imgMath(channelR, beta);
-                channelG = imgMath(channelG, beta);
-                channelB = imgMath(channelB, beta);
+                // 直接调用像素查找表中预处理的好的值即可
+                channelR = lut[channelR];
+                channelG = lut[channelG];
+                channelB = lut[channelB];
                 pixels[index] = (channelA << 24) | (channelR << 16) | (channelG << 8) | (channelB);
             }
         }
         CommonMethods.setRGB(image, 0, 0, width, height, pixels);
-        System.out.println("每次都处理的美白耗费时间为:" + timer.elapsedTime() + "s");
+        System.out.println("利用LUT查找表的美白时间为:" + timer.elapsedTime() + "s");
     }
 
     public static int imgMath(int pixel, double beta) {

@@ -1,5 +1,7 @@
 # OpenCV Python零基础入门
 
+> 课程基于jupyter lab完成，启动Anaconda Navigator后，里面有Jupyter选项，记得修改下默认启动目录
+
 ## 参考博客
 
 + [使用python开启你的opencv之旅---图像的读入,存储](https://www.cnblogs.com/lynsyklate/p/7720045.html)
@@ -64,4 +66,23 @@ class CvUtils:
 
 ## 2.第一个opencv的程序
 > 测试图片来源：https://raw.githubusercontent.com/opencv/opencv/master/samples/data/lena.jpg
+
+把上面的CvUtils.py放到utils包中，在utils包同级目录放入lena.jpg,然后新建notebook(xxx.ipynb),在notebook中添加代码如下即可测试：
+```python
+from utils.CvUtils import CvUtils
+
+# 彩色读取
+CvUtils.show('lena.jpg')
+
+# 灰度读取
+CvUtils.show_gray('lena.jpg')
+
+# 读取为彩色图
+img = cv.imread('lena.jpg', cv.IMREAD_COLOR)
+CvUtils.show_img(img)
+
+# 读取为灰度图
+img = cv.imread('lena.jpg', cv.IMREAD_GRAYSCALE)
+CvUtils.show_img(img)
+```
 

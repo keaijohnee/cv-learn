@@ -7,37 +7,61 @@
 ## OpenCV和Matplotlib实现图像处理结果展示
 
 ```python
+import cv2 as cv
 from matplotlib import pyplot as plt
-import cv2
 
-def show(img_path):
-    """
-    读取彩色图像
-    """
-    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
-    # opencv默认是BGR存储图像,正常是RGB，所以需要进行转换
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-    # 关闭坐标轴显示
-    plt.axis("off")
-    plt.imshow(img)
 
-def show_img(img):
-    """
-    显示彩色图像
-    """
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-    # 关闭坐标轴显示
-    plt.axis("off")
-    plt.imshow(img)
+class CvUtils:
 
-def show_gray(img_path):
-    """
-    读取灰度图像
-    """
-    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
-    # opencv默认是BGR存储图像,正常是RGB，所以需要进行转换
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-    # 关闭坐标轴显示
-    plt.axis("off")
-    plt.imshow(img)
+    @staticmethod
+    def show(img_path):
+        """
+        读取彩色图像
+        :param img_path: 图片路径
+        """
+        img = cv.imread(img_path, cv.IMREAD_COLOR)
+        # opencv默认是BGR存储图像,正常是RGB，所以需要进行转换
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        # 关闭坐标轴显示
+        plt.axis("off")
+        plt.imshow(img)
+
+    @staticmethod
+    def show_img(img):
+        """
+        根据opencv的图片对象显示图片，灰度还是彩色才外面就定下了
+        :param img: opencv读取到的图片对象
+        """
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        # 关闭坐标轴显示
+        plt.axis("off")
+        plt.imshow(img)
+
+    @staticmethod
+    def show_gray(img_path):
+        """
+        灰度方式读取图像
+        :param img_path: 图片路径
+        """
+        img = cv.imread(img_path, cv.IMREAD_GRAYSCALE)
+        # opencv默认是BGR存储图像,正常是RGB，所以需要进行转换
+        img = cv.cvtColor(img, cv.COLOR_BGR2RGB)
+        # 关闭坐标轴显示
+        plt.axis("off")
+        plt.imshow(img)
 ```
+
+## 1.课程概述
+
+### OpenCV的主要模块
+
+> ![OpenCV的主要模块](https://i.loli.net/2019/11/18/zb2Gd3uSQw1qUk8.jpg)
+
+### 2.安装opencv
+
++ 安装基础库：`pip install opencv-python`
++ 安装扩展库：`pip install opencv-contrib-python`
+
+## 2.第一个opencv的程序
+> 测试图片来源：https://raw.githubusercontent.com/opencv/opencv/master/samples/data/lena.jpg
+

@@ -12,23 +12,34 @@
 from matplotlib import pyplot as plt
 import cv2
 
-# 读取图片。第一个参数是图片名称，第二个参数的图片颜色：cv2.IMREAD_GRAYSCALE=0是灰度图，cv2.IMREAD_COLOR=1是彩色图
-img = cv2.imread('l00379880.png', cv2.IMREAD_COLOR)
+def show(img_path):
+    """
+    读取彩色图像
+    """
+    img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+    # opencv默认是BGR存储图像,正常是RGB，所以需要进行转换
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+    # 关闭坐标轴显示
+    plt.axis("off")
+    plt.imshow(img)
 
-# opencv默认的imread是以BGR的方式进行存储的,而matplotlib的imshow默认则是以RGB格式展示,所以此处我们必须对图片的通道进行转换
-img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-plt.imshow(img)
+def show_img(img):
+    """
+    显示彩色图像
+    """
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+    # 关闭坐标轴显示
+    plt.axis("off")
+    plt.imshow(img)
 
-# 读取图片。第一个参数是图片名称，第二个参数的图片颜色：cv2.IMREAD_GRAYSCALE=0是灰度图，cv2.IMREAD_COLOR=1是彩色图
-img_gray = cv2.imread('l00379880.png', cv2.IMREAD_GRAYSCALE)
-img_gray = cv2.cvtColor(img_gray, cv2.COLOR_BGR2RGB)
-plt.imshow(img_gray)
-
-# 读取图片。第一个参数是图片名称，第二个参数的图片颜色：cv2.IMREAD_GRAYSCALE=0是灰度图，cv2.IMREAD_COLOR=1是彩色图
-img_gray = cv2.imread('l00379880.png', cv2.IMREAD_GRAYSCALE)
-img_gray = cv2.cvtColor(img_gray, cv2.COLOR_BGR2RGB)
-plt.imshow(img_gray)
-# 关闭坐标轴
-plt.axis("off")
-plt.show()
+def show_gray(img_path):
+    """
+    读取灰度图像
+    """
+    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+    # opencv默认是BGR存储图像,正常是RGB，所以需要进行转换
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
+    # 关闭坐标轴显示
+    plt.axis("off")
+    plt.imshow(img)
 ```

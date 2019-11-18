@@ -1,6 +1,6 @@
 # OpenCV+Tensorflow从入门到实践 专题
 
-> https://edu.51cto.com/topic/1817.html
+> [专题地址](https://edu.51cto.com/topic/1817.html)
 
 ## 课程列表
 

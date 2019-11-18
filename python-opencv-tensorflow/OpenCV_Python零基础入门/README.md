@@ -55,11 +55,11 @@ class CvUtils:
 
 ## 1.课程概述
 
-### OpenCV的主要模块
+### 1.1 OpenCV的主要模块
 
 > ![OpenCV的主要模块](https://i.loli.net/2019/11/18/zb2Gd3uSQw1qUk8.jpg)
 
-### 2.安装opencv
+### 1.2.安装opencv
 
 + 安装基础库：`pip install opencv-python`
 + 安装扩展库：`pip install opencv-contrib-python`

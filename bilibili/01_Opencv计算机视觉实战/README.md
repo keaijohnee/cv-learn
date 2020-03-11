@@ -4,6 +4,11 @@
 + [51CTO网址](https://edu.51cto.com/course/16729.html)
 + [网易云课堂网址](https://study.163.com/course/introduction.htm?courseId=1208943817#/courseDetail?tab=1)
 
+## 安装命令
+> `3.4.1.15`比较好，3.4.2开始部分算法申请专利，就不在opencv里面了~但是现在网上下载不到这个版本了，先安装最接近地`3.4.2.16`吧
++ 安装基础库：`pip install opencv-python==3.4.2.16`
++ 安装扩展库：`pip install opencv-contrib-python==3.4.2.16`
+
 ## 目录
 
 + 第1章课程简介与环境配置24分钟3节
